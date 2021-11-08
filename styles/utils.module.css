@@ -1,0 +1,11 @@
+.mainText {
+  color: #ffffff !important;
+  font-weight: bold;
+}
+
+.heroHeader {
+  background-color: #F0F9FF;
+  height: 10rem;
+  justify-content: center;
+  display: flex;
+}

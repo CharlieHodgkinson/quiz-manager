@@ -1,0 +1,16 @@
+.loginTitle {
+  text-align: center;
+}
+
+.loginContainer {
+  margin-top: 3rem;
+}
+
+.loginFailAlert {
+  visibility: hidden;
+}
+
+.loginFailAlertVisible {
+  margin-top: 1rem;
+  visibility: visible;
+}

@@ -1,0 +1,17 @@
+.quizTitle {
+  text-align: center;
+  font-size: calc(1.375rem + 1.5vw);
+  font-weight: 500;
+  margin-top: auto;
+}
+
+.quizSubtitle {
+  text-align: center;
+}
+
+.heroHeader {
+  background-color: #F0F9FF;
+  height: 10rem;
+  display: grid;
+  margin-bottom: 1.5rem;
+}
