@@ -1,7 +1,8 @@
 import ListGroup from 'react-bootstrap/ListGroup'
 
 export default function ListAnswers(props) {
-  const { data, userPermission } = props
+  const { questionData, userPermission } = props;
+  console.log("questionData:", questionData)
   return (
     <>
       {userPermission == "Restricted" && <a>You do not have permission to view Answers.</a>}
@@ -9,10 +10,10 @@ export default function ListAnswers(props) {
         <ListGroup variant="flush">
           <ListGroup.Item>
             A:&nbsp;
-            <b>{data[question]['answer']}</b>
+            <b>{questionData['answer']}</b>
             &nbsp;(correct)
           </ListGroup.Item>
-          {data[question]['wrongAnswers'].map((wrongAnswer, index) => {
+          {questionData['wrongAnswers'].map((wrongAnswer, index) => {
             return (
               <ListGroup.Item key={index}>
                 {/* generate an uppercase character based on the index of the list (66 is the ASCII code for B) */}

@@ -10,6 +10,7 @@ import cookie from "js-cookie";
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import QuizView from '../../components/quizView';
+import EditView from '../../components/editView';
 
 export default function Quiz() {
   const router = useRouter()
@@ -49,7 +50,7 @@ export default function Quiz() {
             <QuizView questions={questions} data={data} userPermission={userPermission} />
           </Tab>
           <Tab eventKey="edit" title="Edit" disabled={ userPermission == "Edit" ? false : true }>
-            <a>test2</a>
+            <EditView questions={questions} data={data} userPermission={userPermission} />
           </Tab>
         </Tabs>
         <Button>Delete Quiz</Button>
