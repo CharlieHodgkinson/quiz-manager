@@ -53,7 +53,8 @@ export default function Quiz() {
             <EditView questions={questions} data={data} userPermission={userPermission} />
           </Tab>
         </Tabs>
-        <Button>Delete Quiz</Button>
+        <Button className={styles.submitButton} >Submit Changes</Button>
+        <Button className={styles.deleteButton} variant="danger" >Delete Quiz</Button>
       </Container>
     </>
   )

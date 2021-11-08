@@ -1,4 +1,10 @@
 .answerContainer {
   padding-left: var(--bs-gutter-x,2rem);
-  padding-right: 0rem;
+  padding-right: var(--bs-gutter-x,2rem);
+}
+
+
+.closeButton {
+  padding: 11px;
+  float: left;
 }

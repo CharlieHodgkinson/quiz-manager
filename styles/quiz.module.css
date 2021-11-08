@@ -15,3 +15,12 @@
   display: grid;
   margin-bottom: 1.5rem;
 }
+
+.deleteButton {
+  margin-bottom: 1.5rem;
+  float: right;
+}
+
+.submitButton {
+  margin-bottom: 1.5rem;
+}

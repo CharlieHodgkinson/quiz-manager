@@ -1,8 +1,9 @@
-import { Container } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import styles from './editView.module.css'
+import CloseButton from 'react-bootstrap/CloseButton'
 
 export default function EditView (props) {
   const { questions, data, userPermission } = props
@@ -16,8 +17,11 @@ export default function EditView (props) {
               <Form.Label column sm={2}>
                 Question {indexA+1}:
               </Form.Label>
-              <Col sm={10}>
+              <Col sm={9}>
                 <Form.Control type="text" defaultValue={data[question]['question']} />
+              </Col>
+              <Col sm={1}>
+                <CloseButton className={styles.closeButton} />
               </Col>
             </Form.Group>
 
@@ -26,8 +30,11 @@ export default function EditView (props) {
                 <Form.Label column sm={2}>
                   Answer A (correct):
                 </Form.Label>
-                <Col sm={10}>
+                <Col sm={9}>
                   <Form.Control type="text" defaultValue={data[question]['answer']} />
+                </Col>
+                <Col sm={1}>
+                  <CloseButton className={styles.closeButton} />
                 </Col>
               </Form.Group>
 
@@ -38,8 +45,11 @@ export default function EditView (props) {
                     <Form.Label column sm={2}>
                       Answer {String.fromCharCode(66 + indexB)}:
                     </Form.Label>
-                    <Col sm={10}>
+                    <Col sm={9}>
                       <Form.Control type="text" defaultValue={wrongAnswer} />
+                    </Col>
+                    <Col sm={1}>
+                      <CloseButton className={styles.closeButton} />
                     </Col>
                   </Form.Group>
 
