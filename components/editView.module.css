@@ -1,0 +1,4 @@
+.answerContainer {
+  padding-left: var(--bs-gutter-x,2rem);
+  padding-right: 0rem;
+}
