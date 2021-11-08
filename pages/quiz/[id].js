@@ -50,7 +50,7 @@ export default function Quiz() {
             <QuizView questions={questions} data={data} userPermission={userPermission} />
           </Tab>
           <Tab eventKey="edit" title="Edit" disabled={ userPermission == "Edit" ? false : true }>
-            <EditView questions={questions} data={data} userPermission={userPermission} />
+            <EditView questions={questions} data={data} />
           </Tab>
         </Tabs>
         <Button className={styles.submitButton} >Submit Changes</Button>
