@@ -6,14 +6,19 @@ import { useState, FormEvent } from 'react';
 
 export default function EditView (props) {
   const { questions, data } = props
+  let formData;
+  const newData = {
+    "id": data.id,
+    "name": data.name,
+    "description": data.description
+  };
+
   console.log("data is:", data)
   console.log(questions)
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const newData = {};
+    formData = formData || new FormData(e.target);
     let questionNum;
 
     for(var pair of formData.entries()) {
@@ -26,25 +31,48 @@ export default function EditView (props) {
       else if (pair[0] == "answer"+questionNum+0) {
         newData["question"+questionNum]["answer"] = pair[1];
       }
-      else {
+      else if (pair[0].startsWith("answer"+questionNum)) {
         newData["question"+questionNum]["wrongAnswers"].push(pair[1])
       }
     }
     console.log("newData:", newData)
-    // console.log("new questions", newQuestions)
-    // setNewQuestionData(newQuestions);
-    // console.log("new question state", newQuestionData)
+    const response = await fetch("/api/quizes/"+data['id'], {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    });
+    const responseBody = await response.json();
   };
 
-  const handleDelete = (e) => {
-    formData.delete(name);
+  function handleDelete(item) {
+    formData = formData || new FormData(document.getElementById("quizForm"));
+    console.log("item is", item)
+    if (item.startsWith("answer")) {
+      formData.delete(item);
+      document.getElementById(item).style.display = "none";
+    }
+    else {
+      const questionNum = item.charAt(item.length-1);
+      for(var pair of formData.entries()) {
+        console.log(pair[0], "starts with", "answer"+questionNum, pair[0].startsWith("answer"+questionNum))
+        if(pair[0].startsWith("answer"+questionNum)) {
+          console.log("children:", pair[0])
+          formData.delete(pair[0]);
+          document.getElementById(pair[0]).style.display = "none";
+        }
+      }
+      formData.delete(item);
+      document.getElementById(item).style.display = "none";
+    }
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form id="quizForm" onSubmit={handleSubmit}>
       {questions.map((question, index) => {
         return (
-          <EditForm data={data} question={question} index={index} key={index}/>
+          <EditForm data={data} question={question} index={index} key={index} handleDelete={handleDelete}/>
         )
       })}
       <Button className={styles.submitButton} type="submit">Submit Changes</Button>

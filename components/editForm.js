@@ -7,13 +7,13 @@ import CloseButton from 'react-bootstrap/CloseButton'
 import EditAnswers from './editAnswers'
 
 export default function EditForm (props) {
-  const { data, question, index } = props
+  const { data, question, index, handleDelete } = props
   const questionNum = index;
   index = index+1;
 
   return (
     <>
-      <Form.Group as={Row} className="mb-3" controlId={"question" + index}>
+      <Form.Group as={Row} className="mb-3" controlId={"question" + index} id={"question"+index}>
         <Form.Label column sm={2}>
           Question {index}:
         </Form.Label>
@@ -25,12 +25,12 @@ export default function EditForm (props) {
           />
         </Col>
         <Col sm={1}>
-          <CloseButton className={styles.closeButton} />
+          <CloseButton className={styles.closeButton} onClick={() => handleDelete("question"+index)}/>
         </Col>
       </Form.Group>
 
       <Container className={ styles.answerContainer }>
-        <Form.Group as={Row} className="mb-3" controlId="correctAnswer">
+        <Form.Group as={Row} className="mb-3" controlId="correctAnswer" id={"answer"+index+0}>
           <Form.Label column sm={2}>
             Answer A (correct):
           </Form.Label>
@@ -38,14 +38,14 @@ export default function EditForm (props) {
             <Form.Control type="text" defaultValue={data['question'+index]['answer']} name={"answer"+index+0}/>
           </Col>
           <Col sm={1}>
-            <CloseButton className={styles.closeButton} />
+            <CloseButton className={styles.closeButton} disabled/>
           </Col>
         </Form.Group>
 
         {data['question'+index]['wrongAnswers'].map((wrongAnswer, indexB) => {
           return (
 
-            <EditAnswers wrongAnswer={wrongAnswer} index={indexB} key={indexB} questionIndex={index}/>
+            <EditAnswers wrongAnswer={wrongAnswer} index={indexB} key={indexB} questionIndex={index} handleDelete={handleDelete}/>
 
           )
         })}

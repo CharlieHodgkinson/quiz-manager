@@ -1,3 +1,4 @@
+import { red } from 'bn.js';
 import db from '../../db';
 
 export default async function (req, res) {
@@ -25,10 +26,27 @@ export default async function (req, res) {
       }
     });
   }
-  // else if (req.method === 'PUT') {
-  //   // Allow a blog post to update its likes (via a button) or views (on rendering)
-  // }
+  else if (req.method === 'POST') {
+    console.log("success", req.body)
+
+    const params = {
+      TableName: process.env.QUIZ_TABLE_NAME,
+      Item: req.body
+    };
+
+    db.put(params, function (err, data) {
+      if (err) {
+        console.log('Error', err);
+        res.status(400).json({ error: 'data could not be updated' }).end();
+      } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Cache-Control', 'max-age=180000');
+        res.json({message: "success"});
+        res.status(200).end();
+      }
+    });
+  }
   else {
-    res.status(400).json({ error: 'request should be GET' }).end()
+    res.status(400).json({ error: 'request should be POST or GET' }).end()
   }
 }
