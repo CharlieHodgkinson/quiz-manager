@@ -8,6 +8,11 @@ import EditAnswers from './editAnswers'
 
 export default function EditForm (props) {
   const { questionData, index } = props
+
+  // function handleChange(event) {
+  //   console.log("event is", event)
+  // }
+
   return (
     <>
       <Form.Group as={Row} className="mb-3" controlId={"question" + index+1}>
@@ -15,7 +20,11 @@ export default function EditForm (props) {
           Question {index+1}:
         </Form.Label>
         <Col sm={9}>
-          <Form.Control type="text" defaultValue={questionData['question']} />
+          <Form.Control
+            type="text"
+            defaultValue={questionData['question']}
+            name={"question"+index}
+          />
         </Col>
         <Col sm={1}>
           <CloseButton className={styles.closeButton} />
@@ -28,7 +37,7 @@ export default function EditForm (props) {
             Answer A (correct):
           </Form.Label>
           <Col sm={9}>
-            <Form.Control type="text" defaultValue={questionData['answer']} />
+            <Form.Control type="text" defaultValue={questionData['answer']} name={"question"+index+".answer"}/>
           </Col>
           <Col sm={1}>
             <CloseButton className={styles.closeButton} />
@@ -38,7 +47,7 @@ export default function EditForm (props) {
         {questionData['wrongAnswers'].map((wrongAnswer, indexB) => {
           return (
 
-            <EditAnswers wrongAnswer={wrongAnswer} index={indexB} key={indexB}/>
+            <EditAnswers wrongAnswer={wrongAnswer} index={indexB} key={indexB} questionIndex={index}/>
 
           )
         })}
