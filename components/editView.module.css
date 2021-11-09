@@ -3,8 +3,16 @@
   padding-right: var(--bs-gutter-x,2rem);
 }
 
-
 .closeButton {
   padding: 11px;
   float: left;
+}
+
+.deleteButton {
+  margin-bottom: 1.5rem;
+  float: right;
+}
+
+.submitButton {
+  margin-bottom: 1.5rem;
 }

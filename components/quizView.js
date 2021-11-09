@@ -4,6 +4,7 @@ import styles from './quizView.module.css'
 
 export default function QuizView (props) {
   const { questions, data, userPermission } = props
+
   return (
     <Accordion className={styles.accordion}>
       {questions.map((question, index) => {

@@ -16,8 +16,7 @@ export default function Quiz() {
   const router = useRouter()
   const { id } = router.query
   const userPermission = cookie.get("permission")
-  console.log("userpermission:", userPermission)
-
+  
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR(`/api/quizes/${id}`, fetcher);
 
@@ -27,13 +26,9 @@ export default function Quiz() {
   }
   if (!data) return <div>loading...</div>
 
-  else if (data) {
-    const rawQuestions = Object.keys(data)
-    const questions = rawQuestions.filter(item => item != "id" && item != "name" && item != "description")
-    console.log(questions)
-  }
+  const rawQuestions = Object.keys(data)
+  const questions = rawQuestions.filter(item => item != "id" && item != "name" && item != "description")
 
-  console.log(data)
   return (
     <>
       <Container fluid className={styles.heroHeader}>
@@ -53,8 +48,6 @@ export default function Quiz() {
             <EditView questions={questions} data={data} />
           </Tab>
         </Tabs>
-        <Button className={styles.submitButton} >Submit Changes</Button>
-        <Button className={styles.deleteButton} variant="danger" >Delete Quiz</Button>
       </Container>
     </>
   )
