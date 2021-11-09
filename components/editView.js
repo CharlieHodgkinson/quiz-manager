@@ -6,22 +6,45 @@ import { useState, FormEvent } from 'react';
 
 export default function EditView (props) {
   const { questions, data } = props
-  const [ questionData, setQuestionData ] = useState(questions);
-  const [ quizData, setQuizData ] = useState(data)
+  console.log("data is:", data)
+  console.log(questions)
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
+    const newData = {};
+    let questionNum;
+
     for(var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1])
+      if (pair[0].startsWith("question")) {
+        questionNum = pair[0].charAt(pair[0].length-1);
+        newData["question"+questionNum] = {};
+        newData["question"+questionNum]["question"] = pair[1];
+        newData["question"+questionNum]["wrongAnswers"] = [];
+      }
+      else if (pair[0] == "answer"+questionNum+0) {
+        newData["question"+questionNum]["answer"] = pair[1];
+      }
+      else {
+        newData["question"+questionNum]["wrongAnswers"].push(pair[1])
+      }
     }
+    console.log("newData:", newData)
+    // console.log("new questions", newQuestions)
+    // setNewQuestionData(newQuestions);
+    // console.log("new question state", newQuestionData)
   };
+
+  const handleDelete = (e) => {
+    formData.delete(name);
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
-      {questionData.map((question, index) => {
+      {questions.map((question, index) => {
         return (
-          <EditForm questionData={data[question]} index={index} key={index}/>
+          <EditForm data={data} question={question} index={index} key={index}/>
         )
       })}
       <Button className={styles.submitButton} type="submit">Submit Changes</Button>

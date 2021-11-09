@@ -27,6 +27,7 @@ export default function Quiz() {
   if (!data) return <div>loading...</div>
 
   const rawQuestions = Object.keys(data)
+  console.log("rawQuestions", rawQuestions)
   const questions = rawQuestions.filter(item => item != "id" && item != "name" && item != "description")
 
   return (
