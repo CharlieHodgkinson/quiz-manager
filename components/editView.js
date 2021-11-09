@@ -36,7 +36,7 @@ export default function EditView (props) {
       }
     }
     console.log("newData:", newData)
-    const response = await fetch("/api/quizes/"+data['id'], {
+    const response = await fetch("/api/quizes/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +76,6 @@ export default function EditView (props) {
         )
       })}
       <Button className={styles.submitButton} type="submit">Submit Changes</Button>
-      <Button className={styles.deleteButton} variant="danger" >Delete Quiz</Button>
     </Form>
   )
 }

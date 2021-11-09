@@ -26,22 +26,22 @@ export default async function (req, res) {
       }
     });
   }
-  else if (req.method === 'POST') {
-    console.log("success", req.body)
-
+  else if (req.method === "DELETE") {
     const params = {
       TableName: process.env.QUIZ_TABLE_NAME,
-      Item: req.body
+      Key: {
+        id: quizID
+      }
     };
 
-    db.put(params, function (err, data) {
+    db.delete(params, function (err, data) {
       if (err) {
         console.log('Error', err);
-        res.status(400).json({ error: 'data could not be updated' }).end();
+        res.status(400).json({ error: 'incorrect quiz id' }).end();
       } else {
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Cache-Control', 'max-age=180000');
-        res.json({message: "success"});
+        res.json({"message": "successfully deleted item"});
         res.status(200).end();
       }
     });

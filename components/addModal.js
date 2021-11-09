@@ -3,37 +3,25 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Container } from 'react-bootstrap'
 import { useState } from "react";
-
-
-// function useFormFields(initialValues) {
-//   const [formFields, setFormFields] = useState(initialValues);
-//   const createChangeHandler = function (key) {
-//     return function (e) {
-//       const value = e.target.value;
-//       setFormFields((prev) => {
-//         const newFormFields = { ...prev };
-//         newFormFields[key] = value;
-//         return newFormFields;
-//       });
-//     };
-//   };
-//   return { formFields, createChangeHandler, setFormFields };
-// }
+import styles from './addModal.module.css'
 
 export default function AddModal(props) {
   const { handleClose, show } = props;
   const [questionsCount, setQuestionsCount] = useState(1);
   const [answersCount, setAnswersCount] = useState([3]);
 
-  console.log(questionsCount);
-  console.log(answersCount);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  async function handleSubmit(e) {
     console.log("submit")
     const formData = new FormData(e.target);
     let questionNum;
     const newData = {};
+
+    newData["name"] = formData.get("name")
+    const id = newData["name"].replace(/ /g, "-")
+    console.log(id)
+    newData['id'] = id;
+
+    newData["description"] = formData.get("description");
 
     for(var pair of formData.entries()) {
       if (pair[0].startsWith("question")) {
@@ -50,14 +38,13 @@ export default function AddModal(props) {
       }
     }
     console.log("newData:", newData)
-    // const response = await fetch("/api/quizes/"+data['id'], {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(newData),
-    // });
-    // const responseBody = await response.json();
+    const response = await fetch("/api/quizes/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    });
   };
 
   const handleAddQuestion = (e) => {
@@ -71,13 +58,13 @@ export default function AddModal(props) {
     setQuestionsCount(questionsCount - 1);
   };
 
-  const handleAddAnswer = (e) => {
-    e.preventDefault();
-    let newAnswersCount = answersCount;
-    newAnswersCount[e.target.value] += 1;
-    console.log(newAnswersCount)
-    setAnswersCount(newAnswersCount);
-  };
+  // const handleAddAnswer = (e) => {
+  //   e.preventDefault();
+  //   let newAnswersCount = answersCount;
+  //   newAnswersCount[e.target.value] += 1;
+  //   console.log(newAnswersCount)
+  //   setAnswersCount(newAnswersCount);
+  // };
 
   return (
     <Modal show={show} onHide={handleClose} size="lg">
@@ -85,9 +72,6 @@ export default function AddModal(props) {
         <Modal.Title>Create New Quiz</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        Since you're an editor, you can create new quizzes!
-        <br />
-        <br />
         <Form onSubmit={handleSubmit} id="createQuiz">
           <Form.Group className="mb-3">
             <Form.Label>
@@ -95,22 +79,32 @@ export default function AddModal(props) {
             </Form.Label>
             <Form.Control
               type="id"
-              id="id"
-              defaultValue="Quiz Title"
+              name="name"
+              placeholder="The name of the quiz"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>
+              Enter Description
+            </Form.Label>
+            <Form.Control
+              type="id"
+              name="description"
+              placeholder="A short description of the quiz"
             />
           </Form.Group>
           {[...Array(questionsCount)].map((_, index) => {
             console.log("question map ran")
             return (
               <>
-                <Form.Group className="mb-3" controlId={"question" + index}>
+                <Form.Group className="mb-3" controlId={"question"+(index+1)}>
                   <Form.Label>
-                    Question {index}
+                    Question {index+1}
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    defaultValue="question"
-                    name={"question"+index}
+                    placeholder="Enter the question here"
+                    name={"question"+(index+1)}
                   />
                 </Form.Group>
 
@@ -123,34 +117,29 @@ export default function AddModal(props) {
                         <Form.Label>
                           Answer {String.fromCharCode(65 + indexA)}
                         </Form.Label>
-                        <Form.Control type="text" defaultValue="wrong answer" name={"answer"+index+indexA}/>
+                        <Form.Control type="text" placeholder={indexA == 0 ? "The correct answer to the question" : "Other incorrect answer (for multiple choice)"} name={"answer"+(index+1)+indexA}/>
                       </Form.Group>
                     );
                   })}
 
-                  <Button variant="secondary" value={index} onClick={handleAddAnswer}>
+                  {/* <Button variant="secondary" value={index} onClick={handleAddAnswer}>
                     Add Answer
-                  </Button>
+                  </Button> */}
                 </Container>
               </>
             );
           })}
-          <Button variant="secondary" onClick={handleAddQuestion}>
+          <Button className={styles.submitButton} variant="primary" type="submit">
+            Save Changes
+          </Button>
+          <Button className={styles.button} variant="secondary" onClick={handleAddQuestion}>
             Add Question
           </Button>
-          <Button variant="primary" onClick={handleRemoveQuestion}>
+          <Button className={styles.button} variant="secondary" onClick={handleRemoveQuestion}>
             Remove Question
-          </Button>
-          <Button variant="primary" type="submit">
-            Save Changes
           </Button>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 }

@@ -9,7 +9,27 @@ import Button from 'react-bootstrap/Button'
 
 export default function Quizes(props) {
   const fetcher = (url) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR("/api/quizes", fetcher);
+  const { data, error, mutate } = useSWR("/api/quizes", fetcher);
+
+  async function handleDeleteQuiz(quizID) {
+    const text = document.getElementById("delete."+quizID)
+    const response = await fetch("/api/quizes/"+quizID, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const responseBody = await response.json();
+    if (response.status == 200) {
+      text.style = "visibility: unset"
+      //fetch("/api/quizes")
+      mutate()
+    }
+    else {
+      text.innerHTML = responseBody.error;
+      text.style = "visibility: unset"
+    }
+  }
 
   if (error) {
     console.log(error)
@@ -46,6 +66,8 @@ export default function Quizes(props) {
                   {Object.keys(quiz).length - 3} Questions
                 </Card.Text>
                 <Button href={`/quiz/${quiz.id}`} className={styles.viewQuizButton}>View Quiz</Button>
+                <Button variant="danger" className={styles.deleteQuizButton} onClick={() => handleDeleteQuiz(quiz.id)}>Delete Quiz</Button>
+                <a className={styles.deleteText} id={"delete."+quiz.id}>Successfully deleted quiz</a>
               </Card.Body>
             </Card>
           )
