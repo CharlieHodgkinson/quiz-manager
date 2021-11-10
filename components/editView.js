@@ -33,7 +33,7 @@ export default function EditView (props) {
         newData['answers'][newQuestionNum].push(pair[1])
       }
     }
-    const response = await fetch("/api/quizes/", { // post the newData object to the api so it can put it in the database
+    const response = await fetch("/api/quizzes/", { // post the newData object to the api so it can put it in the database
       method: "POST",
       headers: {
         "Content-Type": "application/json",

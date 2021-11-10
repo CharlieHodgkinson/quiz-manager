@@ -1,21 +1,21 @@
 import useSWR from 'swr'
 import Card from 'react-bootstrap/Card'
 import Container from "react-bootstrap/Container";
-import styles from '../styles/quizesLayout.module.css'
+import styles from '../styles/quizzesLayout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import cookie from "js-cookie";
 
-export default function Quizes(props) {
+export default function Quizzes(props) {
   const fetcher = (url) => fetch(url).then((res) => res.json());
-  const { data, error, mutate } = useSWR("/api/quizes", fetcher); // fetch the data for all the quizes from the api
+  const { data, error, mutate } = useSWR("/api/quizzes", fetcher); // fetch the data for all the quizzes from the api
   const userPermission = cookie.get("permission"); // get the users permission level
 
   async function handleDeleteQuiz(quizID) { // if the user clicks the delete button
     const text = document.getElementById("delete."+quizID)
-    const response = await fetch("/api/quizes/"+quizID, { // send a delete request to the api with the quiz id
+    const response = await fetch("/api/quiz/"+quizID, { // send a delete request to the api with the quiz id
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export default function Quizes(props) {
           </Col>
           <Col className={styles.textCol}>
             <h1>Quiz Manager</h1>
-            <a>Here you can view all the quizes that have been created. Select a quiz to see the questions.</a>
+            <a>Here you can view all the quizzes that have been created. Select a quiz to see the questions.</a>
           </Col>
         </Row>
       </Container>

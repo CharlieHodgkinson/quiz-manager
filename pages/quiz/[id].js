@@ -16,7 +16,7 @@ export default function Quiz() {
   const userPermission = cookie.get("permission") // get users permission level
   
   const fetcher = (url) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR(`/api/quizes/${id}`, fetcher); // fetch data from the dynamic api route
+  const { data, error } = useSWR(`/api/quiz/${id}`, fetcher); // fetch data from the dynamic api route
 
   if (error) { // if the fetch fails
     console.log(error)

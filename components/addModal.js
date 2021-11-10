@@ -39,7 +39,7 @@ export default function AddModal(props) {
         newData['answers'][newQuestionNum].push(pair[1])
       }
     }
-    const response = await fetch("/api/quizes/", { // post the new quiz object to the api
+    const response = await fetch("/api/quizzes/", { // post the new quiz object to the api
       method: "POST",
       headers: {
         "Content-Type": "application/json",
