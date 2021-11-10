@@ -24,10 +24,6 @@ export default function Quiz() {
   }
   if (!data) return <div>loading...</div> // if the fetch is still in progress
 
-  // const rawQuestions = Object.keys(data)
-  // console.log("rawQuestions", rawQuestions)
-  // const questions = rawQuestions.filter(item => item != "id" && item != "name" && item != "description") // create an array of just the question object keys
-
   return (
     <>
       <Container fluid className={styles.heroHeader}>
