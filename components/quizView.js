@@ -3,19 +3,19 @@ import ListAnswers from './listAnswers'
 import styles from './quizView.module.css'
 
 export default function QuizView (props) {
-  const { questions, data, userPermission } = props
+  const { data, userPermission } = props
 
   return (
     <Accordion className={styles.accordion}>
-      {questions.map((question, index) => {
+      {data['questions'].map((question, index) => {
         return (
           <Accordion.Item key={index} eventKey={index}>
             <Accordion.Header>
               Question {index+1}:&nbsp;
-              <b>{data['question'+(index+1)]['question']}</b>
+              <b>{data['questions'][index]}</b>
             </Accordion.Header>
             <Accordion.Body>
-              <ListAnswers questionData={data['question'+(index+1)]} userPermission={userPermission} />
+              <ListAnswers data={data} index={index} userPermission={userPermission} />
             </Accordion.Body>
           </Accordion.Item>
         )

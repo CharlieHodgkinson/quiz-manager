@@ -64,7 +64,7 @@ export default function Quizes(props) {
               <Card.Body>
                 <Card.Title>{quiz.description}</Card.Title>
                 <Card.Text>
-                  {Object.keys(quiz).length - 3} Questions
+                  {quiz['questions'].length} Questions
                 </Card.Text>
                 <Button href={`/quiz/${quiz.id}`} className={styles.viewQuizButton}>View Quiz</Button>
                 {userPermission == "Edit" && 

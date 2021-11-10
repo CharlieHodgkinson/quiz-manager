@@ -24,9 +24,9 @@ export default function Quiz() {
   }
   if (!data) return <div>loading...</div> // if the fetch is still in progress
 
-  const rawQuestions = Object.keys(data)
-  console.log("rawQuestions", rawQuestions)
-  const questions = rawQuestions.filter(item => item != "id" && item != "name" && item != "description") // create an array of just the question object keys
+  // const rawQuestions = Object.keys(data)
+  // console.log("rawQuestions", rawQuestions)
+  // const questions = rawQuestions.filter(item => item != "id" && item != "name" && item != "description") // create an array of just the question object keys
 
   return (
     <>
@@ -42,11 +42,11 @@ export default function Quiz() {
         <Tabs defaultActiveKey="view" id="quiz-tabs" className="mb-3">
           <Tab eventKey="view" title="View">
             {/* use the quizView component */}
-            <QuizView questions={questions} data={data} userPermission={userPermission} />
+            <QuizView data={data} userPermission={userPermission} />
           </Tab>
           <Tab eventKey="edit" title="Edit" disabled={ userPermission == "Edit" ? false : true }>
             {/* use the edit view component */}
-            <EditView questions={questions} data={data} />
+            <EditView data={data}/>
           </Tab>
         </Tabs>
       </Container>
