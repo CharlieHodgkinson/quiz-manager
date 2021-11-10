@@ -13,11 +13,12 @@ import AddModal from "./addModal";
 export default function Navigation() {
   const router = useRouter();
   const [show, setShow] = useState(false);
-  
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleEdit = (e) => [];
+  const userPermission = cookie.get("permission")
+
   return (
     <>
       <Navbar className={styles.navbar}>
@@ -34,13 +35,16 @@ export default function Navigation() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-end">
-            <Button className={styles.edit} onClick={handleShow}>
-              Create Quiz
-            </Button>{" "}
+            {userPermission == "Edit" && 
+              <Button className={styles.edit} onClick={handleShow}>
+                Create Quiz
+              </Button>
+            }
             <Button
               className={styles.logout}
               onClick={() => {
                 cookie.remove("user"); //remove the cookie
+                cookie.remove("permission")
                 router.push("/login"); //redirect the user to the login page
               }}
             >

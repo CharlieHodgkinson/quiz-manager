@@ -8,4 +8,4 @@ AWS.config.update({
 
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: 'latest' });
 
-export default db;
+export default db; // set config for accessing the database and export it as db for the api to use

@@ -1,47 +1,44 @@
-import db from '../db';
+import db from '../../components/db'; //import the dynamoDB config from component
 
 export default async function (req, res) {
   // filter API requests by method
   if (req.method === 'GET') {
-    // Allow a blog post to get its number of likes and views
     const params = {
       TableName: process.env.QUIZ_TABLE_NAME,
     };
 
-    db.scan(params, function (err, data) {
-      if (err) {
+    db.scan(params, function (err, data) { // get all entries in the quiz database
+      if (err) { // if the scan fails
         console.log('Error', err);
         res.status(500).json({ error: 'failed to load data' }).end()
       } else {
-        // send the json response from the callback
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Cache-Control', 'max-age=180000');
-        res.json(data.Items);
+        res.json(data.Items); // return all the items returned from the database
         res.status(200).end();
       }
     });
   }
   else if (req.method === 'POST') {
-    console.log("success", req.body)
-
     const params = {
       TableName: process.env.QUIZ_TABLE_NAME,
       Item: req.body
     };
 
-    db.put(params, function (err, data) {
-      if (err) {
+    db.put(params, function (err, data) { // put the quiz data passed in through the req body into the database
+      if (err) { // if the put fails
         console.log('Error', err);
         res.status(400).json({ error: 'data could not be updated' }).end();
       } else {
+        console.log("inserted into the database")
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Cache-Control', 'max-age=180000');
         res.json({message: "success"});
-        res.status(200).end();
+        res.status(200).end(); // return success
       }
     });
   }
-  else {
+  else { // catch any invalid request methods
     res.status(400).json({ error: 'request should be GET' }).end()
   }
 }

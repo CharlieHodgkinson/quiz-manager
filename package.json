@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +20,7 @@
     "isomorphic-unfetch": "^3.1.0",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
-    "next": "^12.0.2",
+    "next": "^12.0.3",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.1",
     "react-cookie": "^4.1.1",

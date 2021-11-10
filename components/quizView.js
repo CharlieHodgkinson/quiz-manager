@@ -15,7 +15,7 @@ export default function QuizView (props) {
               <b>{data['question'+(index+1)]['question']}</b>
             </Accordion.Header>
             <Accordion.Body>
-              <ListAnswers questionData={data[question]} userPermission={userPermission} />
+              <ListAnswers questionData={data['question'+(index+1)]} userPermission={userPermission} />
             </Accordion.Body>
           </Accordion.Item>
         )

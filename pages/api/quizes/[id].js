@@ -1,11 +1,10 @@
 import { red } from 'bn.js';
-import db from '../../db';
+import db from '../../../components/db';
 
 export default async function (req, res) {
-  const quizID = req.query.id;
+  const quizID = req.query.id; // setting quizID to the url slug used
   // filter API requests by method
   if (req.method === 'GET') {
-    // Allow a blog post to get its number of likes and views
     const params = {
       TableName: process.env.QUIZ_TABLE_NAME,
       Key: {
@@ -13,15 +12,14 @@ export default async function (req, res) {
       }
     };
 
-    db.get(params, function (err, data) {
-      if (err) {
+    db.get(params, function (err, data) { // getting the quiz that matches the given quiz id
+      if (err) { // if there wernt any quizes matching the given id in the database
         console.log('Error', err);
-        res.status(400).json({ error: 'incorrect quiz id' }).end();
+        res.status(400).json({ error: 'incorrect quiz id' }).end(); // return error
       } else {
-        // send the json response from the callback
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Cache-Control', 'max-age=180000');
-        res.json(data.Item);
+        res.json(data.Item); // return the data of the quiz that macthed the id
         res.status(200).end();
       }
     });
@@ -34,19 +32,19 @@ export default async function (req, res) {
       }
     };
 
-    db.delete(params, function (err, data) {
-      if (err) {
+    db.delete(params, function (err, data) { // delete the quiz that macthes the given quiz id
+      if (err) { // if the given quiz id is not in the database
         console.log('Error', err);
         res.status(400).json({ error: 'incorrect quiz id' }).end();
-      } else {
+      } else { // if quiz was deleted successfully
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Cache-Control', 'max-age=180000');
-        res.json({"message": "successfully deleted item"});
+        res.json({"message": "successfully deleted item"}); // rteurn success
         res.status(200).end();
       }
     });
   }
-  else {
+  else { // catching any invalid request methods
     res.status(400).json({ error: 'request should be POST or GET' }).end()
   }
 }

@@ -1,4 +1,4 @@
-import { Button, Container } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -7,8 +7,7 @@ import CloseButton from 'react-bootstrap/CloseButton'
 import EditAnswers from './editAnswers'
 
 export default function EditForm (props) {
-  const { data, question, index, handleDelete } = props
-  const questionNum = index;
+  const { data, index, handleDelete } = props
   index = index+1;
 
   return (
@@ -44,9 +43,7 @@ export default function EditForm (props) {
 
         {data['question'+index]['wrongAnswers'].map((wrongAnswer, indexB) => {
           return (
-
             <EditAnswers wrongAnswer={wrongAnswer} index={indexB} key={indexB} questionIndex={index} handleDelete={handleDelete}/>
-
           )
         })}
       </Container>
