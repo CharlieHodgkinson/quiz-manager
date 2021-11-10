@@ -1,0 +1,44 @@
+.card {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: #F7F5F6;
+  border: #389CEC;
+}
+
+.cardHeader {
+  background-color: #389CEC;
+  color: #ffffff;
+}
+
+.heroHeaderImage {
+  float: right;
+  display: block;
+  max-width:230px;
+  max-height:120px;
+  width: auto;
+  height: auto;
+}
+
+.imageCol {
+  padding: 1rem;
+  padding-right: 2.5rem;
+}
+
+.textCol {
+  padding: 1.5rem;
+}
+
+.viewQuizButton {
+  background-color: #389CEC;
+  border: #389CEC;
+  color: #ffffff;
+  margin-right: 16px;
+}
+
+.deleteQuizButton {
+  margin-right: 16px;
+}
+
+.deleteText {
+  visibility: hidden;
+}
